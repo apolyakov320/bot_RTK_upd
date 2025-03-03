@@ -8,7 +8,7 @@ from handlers.internet_menu import internet_router
 from handlers.internet_tv_menu import internet_tv_router
 from handlers.internet_sim_menu import internet_sim_router
 from handlers.internet_tv_sim_menu import internet_tv_sim_router
-# from work_time.time_func import send_time_msg
+# from work_time.time_func import send_time_msg``
 
 
 # oпределяем основную асинхронную функцию main
