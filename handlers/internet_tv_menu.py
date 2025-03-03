@@ -1,7 +1,7 @@
 # импортируем необходимые модули и функции
 from aiogram import Router, F # роутер и "магический фильтр"
 from aiogram.types import CallbackQuery
-from keyboards.inline_kb import get_internet_tv_kb, internet_tv_rates_kb
+from keyboards.inline_kb import internet_tv_kb, get_services_menu_kb
 internet_tv_router = Router()
 
 
@@ -10,29 +10,23 @@ internet_tv_router = Router()
 @internet_tv_router.callback_query(F.data == 'internet_tv')
 async def internet_tv(callback:CallbackQuery):
     await callback.answer()
-    await callback.message.edit_text('<b>Нажмите на интересующий тариф, чтобы узнать о нем подробнее:</b>',
-                                     reply_markup=get_internet_tv_kb())
-
-# подменю тариф «Технология развлечения. Онлайн»
-@internet_tv_router.callback_query(F.data == 'get_tro')
-async def get_tro(callback:CallbackQuery):
-    await callback.answer()
-    await callback.message.edit_text('Скорость до 200 мб/с 🏎️💨\nАбонентская плата 375 руб. (первые 2 месяца), начиная с 3-го месяца 750 руб.\n➕ видеосервис Wink',
-                                     reply_markup=internet_tv_rates_kb())
+    await callback.message.edit_text('''<b>Тариф "Технология развлечения. Онлайн"</b>
+Скорость до 200 мб/с 🏎️💨
+Абонентская плата 375 руб. (первые 2 месяца), начиная с 3-го месяца 750 руб.
+➕ видеосервис Wink(подключение на ТВ без доп.приставок)
+                                     
+<b>Тариф "Технология развлечения"</b>
+Скорость до 200 мб/с 🏎️💨
+Абонентская плата 375 руб. (первые 2 месяца), начиная с 3-го месяца 750 руб.
+➕ видеосервис Wink(необходима ТВ-приставка, приобретается отдельно)''',
+                                    reply_markup=internet_tv_kb())
     
-# подменю тариф «Технология развлечения»
-@internet_tv_router.callback_query(F.data == 'get_tr')
-async def get_tr(callback:CallbackQuery):
+# вернуться к меню подключение услуги
+@internet_tv_router.callback_query(F.data == 'back_to_services')
+async def back_to_services(callback:CallbackQuery):
     await callback.answer()
-    await callback.message.edit_text('Скорость до 200 мб/с 🏎️💨\nАбонентская плата 375 руб. (первые 2 месяца), начиная с 3-го месяца 750 руб.\n➕ видеосервис Wink (требуется ТВ-приставка)',
-                                     reply_markup=internet_tv_rates_kb())
-    
-# к тарифам интернет+ТВ
-@internet_tv_router.callback_query(F.data == 'internet_tv_rates')
-async def internet_tv_rates(callback:CallbackQuery):
-    await callback.answer()
-    await callback.message.edit_text('<b>Нажмите на интересующий тариф, чтобы узнать о нем подробнее:</b>', 
-                                     reply_markup=get_internet_tv_kb())
+    await callback.message.edit_text('<b>Выберите интересующий Вас вариант из списка ниже: </b>',
+                                     reply_markup=get_services_menu_kb())  
   
 
 

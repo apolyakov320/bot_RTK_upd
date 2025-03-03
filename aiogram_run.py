@@ -6,6 +6,7 @@ from handlers.techsup_menu import techsup_router
 from handlers.request_data import request_router
 from handlers.internet_menu import internet_router
 from handlers.internet_tv_menu import internet_tv_router
+from handlers.internet_sim_menu import internet_sim_router
 from handlers.internet_tv_sim_menu import internet_tv_sim_router
 # from work_time.time_func import send_time_msg
 
@@ -20,6 +21,7 @@ async def main():
     dp.include_router(request_router) 
     dp.include_router(internet_router) 
     dp.include_router(internet_tv_router) 
+    dp.include_router(internet_sim_router) 
     dp.include_router(internet_tv_sim_router)
 # запуск бота в режиме long polling при запуске бот очищает все обновления, которые были за его моменты бездействия    
     try:

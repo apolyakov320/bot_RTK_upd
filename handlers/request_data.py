@@ -67,8 +67,6 @@ async def accept(callback:CallbackQuery):
     user_id = callback.from_user.id
     logger.info(f"Пользователь {user_id} ввел данные.")
     save_to_excel(user_data)
-    if user_id in user_data:
-        del user_data[user_id]  # Очищаем данные пользователя
     await callback.message.edit_text('''😊 Спасибо за Ваш интерес, проявленный к услугам Ростелекома.
 👨‍💻В ближайшее время с Вами свяжется специалист
                                      
