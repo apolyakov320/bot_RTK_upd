@@ -1,7 +1,7 @@
 # импортируем необходимые модули и функции
 from aiogram import Router, F # роутер и "магический фильтр"
 from aiogram.types import CallbackQuery
-from keyboards.inline_kb import get_techsup_menu_kb, get_techsup_lk_kb
+from keyboards.inline_kb import get_techsup_menu_kb, get_techsup_lk_kb, techsup_social_kb
 techsup_router = Router()
 
 @techsup_router.callback_query(F.data == 'trouble_internet')
@@ -16,7 +16,7 @@ async def trouble_internet(callback:CallbackQuery):
                                      
 📞 88001000800
                                      
-или выберите другой способ связи с нами:</b>''',
+или самостоятельно оставьте заявку в Личном кабинете:</b>''',
 reply_markup=get_techsup_lk_kb())
 
 @techsup_router.callback_query(F.data == 'trouble_internet_tv')
@@ -32,19 +32,19 @@ async def trouble_internet(callback:CallbackQuery):
                                     
 📞 88001000800
                                      
-или выберите другой способ связи с нами:</b>''',
+или самостоятельно оставьте заявку в Личном кабинете:</b>''',
 reply_markup=get_techsup_lk_kb())
 
 @techsup_router.callback_query(F.data == 'trouble_other')
 async def trouble_internet(callback:CallbackQuery):
     await callback.answer()
     await callback.message.edit_text(
-'''<b>В случае если проблема сохранилась, обратитесь к нам на горячую линию
+'''<b>По прочим вопросам обращайтесь к нам на горячую линию:</b>
 
 📞 88001000800
- 
- или выберите другой способ связи с нами:</b>''',
-reply_markup=get_techsup_lk_kb())
+
+Мы обязательно разберемся и поможем ❤️''',
+reply_markup=techsup_social_kb())
 
 @techsup_router.callback_query(F.data == 'techsup_back')
 async def techsup_back(callback:CallbackQuery):

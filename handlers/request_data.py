@@ -3,6 +3,7 @@ from aiogram import Router, F # роутер и "магический фильт
 from aiogram.types import Message, CallbackQuery
 from keyboards.inline_kb import get_services_menu_kb, yes_no_kb
 import pandas as pd
+import re
 import logging
 
 
@@ -15,6 +16,16 @@ logger = logging.getLogger(__name__)
 # подключить 
 # Состояния для сбора данных
 user_data = {}
+
+# Функция для проверки номера телефона
+def validate_phone(phone: str) -> bool:
+    """
+    Проверяет, соответствует ли номер телефона формату:
+    - +7XXXXXXXXXX или 8XXXXXXXXXX (X - цифры)
+    - Длина номера: 11 символов.
+    """
+    pattern = re.compile(r'^(\+7|8)\d{10}$')  # Регулярное выражение для проверки
+    return bool(pattern.match(phone))
 
 # функция сохранения данных в excel файл
 def save_to_excel(user_data):
@@ -29,31 +40,31 @@ def save_to_excel(user_data):
 async def request_user_data(callback:CallbackQuery):
     await callback.answer()
     await callback.message.answer(
-'''📝<b>Пожалуйста, укажите следующие данные:</b>
-
-Ваше ФИО (полностью, например, Иванов Иван Иванович).'''
+'''Чтобы узнать подробнее о выбранном Вами тарифе, пожалуйста, позвоните по номеру: +73452599936 
+                             
+или оставьте свой номер для связи в формате +7XXXXXXXXXX или 8XXXXXXXXXX (X - цифры), и мы вам перезвоним''', 
+callback_data='request_user_data'
 )
     user_data[callback.from_user.id] = {} # создаем запись для пользователя  
-
+    
 @request_router.message()
 async def process_data(message: Message):
     user_id = message.from_user.id
     if user_id not in user_data:
         return
     
-    text = message.text
-    if 'ФИО' not in user_data[user_id]:
-        user_data[user_id]['ФИО'] = text
-        await message.answer('Спасибо! Теперь укажите адрес подключения (город, улица, дом, квартира).')
-    elif 'Адрес' not in user_data[user_id]:
-        user_data[user_id]['Адрес'] = text
-        await message.answer('Отлично! Теперь укажите Ваш номер телефона (в формате +7XXXXXXXXXX или 8XXXXXXXXXX)')
-    elif 'Телефон' not in user_data[user_id]:
-        user_data[user_id]['Телефон'] = text
+    phone = message.text
+    if validate_phone(phone):
+        # Если номер корректен, сохраняем его
+        user_data[user_id]['Телефон'] = phone
+    else:
+        # Если номер некорректен, запрашиваем повторный ввод
         await message.answer(
+            "Номер телефона введен в неправильном формате. "
+            "Пожалуйста, введите номер в формате +7XXXXXXXXXX или 8XXXXXXXXXX."
+        )
+    await message.answer(
 f'''<b>Проверьте введенные данные:</b> 
-ФИО: {user_data[user_id]['ФИО']}
-Адрес: {user_data[user_id]['Адрес']}
 Телефон: {user_data[user_id]['Телефон']}
 
 Всё верно?
@@ -80,5 +91,5 @@ async def accept(callback:CallbackQuery):
 @request_router.callback_query(F.data == 'decline') 
 async def decline(callback:CallbackQuery):
     await callback.answer()
-    await callback.message.edit_text('<b>Хочу подключить:</b>', 
-                                   reply_markup=get_services_menu_kb())
+    await callback.message.edit_text('<b>Выберите интересующий Вас вариант из списка ниже: </b>',
+                                     reply_markup=get_services_menu_kb())

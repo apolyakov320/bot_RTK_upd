@@ -23,7 +23,7 @@ def get_services_menu_kb():
 # клавиатура тарифы [Подключить услуги - Интернет]
 def internet_kb():
     inline_kb_list = [
-        [InlineKeyboardButton(text='Узнать подробнее', callback_data='get_info')],
+        [InlineKeyboardButton(text='Оставить заявку', callback_data='request_user_data')],
         [InlineKeyboardButton(text='Добавить услугу ТВ', callback_data='need_tv')],
         [InlineKeyboardButton(text='Добавить услугу Sim-карта', callback_data='need_sim')],
         [InlineKeyboardButton(text='Назад', callback_data='back_to_services')]
@@ -33,7 +33,7 @@ def internet_kb():
 # клавиатура тарифы [Подключить услуги - Интернет+ТВ]
 def internet_tv_kb():
     inline_kb_list = [
-        [InlineKeyboardButton(text='Узнать подробнее', callback_data='get_info')],
+        [InlineKeyboardButton(text='Оставить заявку', callback_data='request_user_data')],
         [InlineKeyboardButton(text='Добавить услугу Sim-карта', callback_data='need_tv_sim')],
         [InlineKeyboardButton(text='Назад', callback_data='back_to_services')]
     ]
@@ -42,7 +42,7 @@ def internet_tv_kb():
 # клавиатура тарифы [Подключить услуги - Интернет+Sim]
 def internet_sim_kb():
     inline_kb_list = [
-        [InlineKeyboardButton(text='Узнать подробнее', callback_data='get_info')],
+        [InlineKeyboardButton(text='Оставить заявку', callback_data='request_user_data')],
         [InlineKeyboardButton(text='Добавить услугу ТВ', callback_data='need_tv_sim')],
         [InlineKeyboardButton(text='Назад', callback_data='back_to_services')]
     ]
@@ -51,7 +51,7 @@ def internet_sim_kb():
 # клавиатура тарифы [Подключить услуги - Интернет+ТВ+sim]
 def internet_tv_sim_kb():
     inline_kb_list = [
-        [InlineKeyboardButton(text='Узнать подробнее', callback_data='get_info')],
+        [InlineKeyboardButton(text='Оставить заявку', callback_data='request_user_data')],
         [InlineKeyboardButton(text='Назад', callback_data='back_to_services')]
     ]
     return InlineKeyboardMarkup(inline_keyboard=inline_kb_list)
@@ -76,18 +76,26 @@ def get_techsup_lk_kb():
     ]
     return InlineKeyboardMarkup(inline_keyboard=inline_kb_list)
 
+def techsup_social_kb():
+    inline_kb_list = [
+        [InlineKeyboardButton(text='💬Написать нам ВКонтакте', url ='https://vk.com/im?entrypoint=community_page&media=&sel=-24720111')],
+        [InlineKeyboardButton(text='✍️Написать нам в Одноклассниках ', url ='https://ok.ru/dk?st.cmd=anonymMain&st.lgi=HbNDWWF9V4nT')],
+        [InlineKeyboardButton(text='Назад', callback_data='techsup_back')]
+    ]
+    return InlineKeyboardMarkup(inline_keyboard=inline_kb_list)
+
+# ввести номер/назад
+def enter_number_kb():
+    inline_kb_list = [
+        [InlineKeyboardButton(text='Ввести номер', callback_data='enter_number')],
+        [InlineKeyboardButton(text='Назад', callback_data='techsup_back')]
+    ]
+    return InlineKeyboardMarkup(inline_keyboard=inline_kb_list)
+
 # клавиатура да/нет 
 def yes_no_kb():
     inline_kb_list = [
         [InlineKeyboardButton(text='Да', callback_data='accept')],
         [InlineKeyboardButton(text='Нет', callback_data='decline')]
-    ]
-    return InlineKeyboardMarkup(inline_keyboard=inline_kb_list)
-
-# клавиатура подключить/к тарифам [Подключить услуги - Интернет]
-def internet_rates_kb():
-    inline_kb_list = [
-        [InlineKeyboardButton(text='Подключить', callback_data='request_user_data')],
-        [InlineKeyboardButton(text='Назад', callback_data='internet_rates')]
     ]
     return InlineKeyboardMarkup(inline_keyboard=inline_kb_list)
