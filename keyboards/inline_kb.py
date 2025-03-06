@@ -4,10 +4,23 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 def main_menu_kb():
    inline_kb_list = [
         [InlineKeyboardButton(text='🚀 Подключить услуги', callback_data='connect_services')],
-        [InlineKeyboardButton(text='🛠️ Тех.поддержка', callback_data='techsup')],
+        [InlineKeyboardButton(text='🛠️ Тех.поддержка', callback_data='techsup'), InlineKeyboardButton(text='😊 Оставить отзыв', callback_data='thanks_to')],
         [InlineKeyboardButton(text='📦 Переезд', callback_data='relocation')]
     ]
    return InlineKeyboardMarkup(inline_keyboard=inline_kb_list)
+
+def privacy_menu_kb():
+    inline_kb_list = [
+        [InlineKeyboardButton(text='Открыть', url ='https://docs.google.com/document/d/1_qCH_1NHQs_erWQnoNKfVNZcPyf_uHPapsH49IMNWtY/edit?usp=sharing')]
+    ]
+    return InlineKeyboardMarkup(inline_keyboard=inline_kb_list)
+
+def review_kb():
+    inline_kb_list = [
+        [InlineKeyboardButton(text='Мы в 2ГИС', url='https://2gis.ru/tyumen/search/%D0%A0%D0%BE%D1%81%D1%82%D0%B5%D0%BB%D0%B5%D0%BA%D0%BE%D0%BC/firm/70000001019870299/tab/reviews?m=65.531745%2C57.154385%2F14.88')],
+        [InlineKeyboardButton(text='Назад', callback_data='back_to')]
+    ]
+    return InlineKeyboardMarkup(inline_keyboard=inline_kb_list)
 
 # клавиатура [Подключить услуги]
 def get_services_menu_kb():
@@ -23,7 +36,7 @@ def get_services_menu_kb():
 # клавиатура тарифы [Подключить услуги - Интернет]
 def internet_kb():
     inline_kb_list = [
-        [InlineKeyboardButton(text='Оставить заявку', callback_data='request_user_data')],
+        [InlineKeyboardButton(text='Оставить заявку', callback_data='enter_data')],
         [InlineKeyboardButton(text='Добавить услугу ТВ', callback_data='need_tv')],
         [InlineKeyboardButton(text='Добавить услугу Sim-карта', callback_data='need_sim')],
         [InlineKeyboardButton(text='Назад', callback_data='back_to_services')]
@@ -33,7 +46,7 @@ def internet_kb():
 # клавиатура тарифы [Подключить услуги - Интернет+ТВ]
 def internet_tv_kb():
     inline_kb_list = [
-        [InlineKeyboardButton(text='Оставить заявку', callback_data='request_user_data')],
+        [InlineKeyboardButton(text='Оставить заявку', callback_data='enter_data')],
         [InlineKeyboardButton(text='Добавить услугу Sim-карта', callback_data='need_tv_sim')],
         [InlineKeyboardButton(text='Назад', callback_data='back_to_services')]
     ]
@@ -42,7 +55,7 @@ def internet_tv_kb():
 # клавиатура тарифы [Подключить услуги - Интернет+Sim]
 def internet_sim_kb():
     inline_kb_list = [
-        [InlineKeyboardButton(text='Оставить заявку', callback_data='request_user_data')],
+        [InlineKeyboardButton(text='Оставить заявку', callback_data='enter_data')],
         [InlineKeyboardButton(text='Добавить услугу ТВ', callback_data='need_tv_sim')],
         [InlineKeyboardButton(text='Назад', callback_data='back_to_services')]
     ]
@@ -51,7 +64,7 @@ def internet_sim_kb():
 # клавиатура тарифы [Подключить услуги - Интернет+ТВ+sim]
 def internet_tv_sim_kb():
     inline_kb_list = [
-        [InlineKeyboardButton(text='Оставить заявку', callback_data='request_user_data')],
+        [InlineKeyboardButton(text='Оставить заявку', callback_data='enter_data')],
         [InlineKeyboardButton(text='Назад', callback_data='back_to_services')]
     ]
     return InlineKeyboardMarkup(inline_keyboard=inline_kb_list)
@@ -79,16 +92,16 @@ def get_techsup_lk_kb():
 def techsup_social_kb():
     inline_kb_list = [
         [InlineKeyboardButton(text='💬Написать нам ВКонтакте', url ='https://vk.com/im?entrypoint=community_page&media=&sel=-24720111')],
-        [InlineKeyboardButton(text='✍️Написать нам в Одноклассниках ', url ='https://ok.ru/dk?st.cmd=anonymMain&st.lgi=HbNDWWF9V4nT')],
+        [InlineKeyboardButton(text='✍️Написать нам в Одноклассниках ', url ='https://ok.ru/rostelecom.official')],
         [InlineKeyboardButton(text='Назад', callback_data='techsup_back')]
     ]
     return InlineKeyboardMarkup(inline_keyboard=inline_kb_list)
 
 # ввести номер/назад
-def enter_number_kb():
+def enter_data_kb():
     inline_kb_list = [
-        [InlineKeyboardButton(text='Ввести номер', callback_data='enter_number')],
-        [InlineKeyboardButton(text='Назад', callback_data='techsup_back')]
+        [InlineKeyboardButton(text='Ввести номер', callback_data='request_user_data')],
+        [InlineKeyboardButton(text='Назад', callback_data='back_to_services')]
     ]
     return InlineKeyboardMarkup(inline_keyboard=inline_kb_list)
 
