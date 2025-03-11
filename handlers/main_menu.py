@@ -2,7 +2,7 @@
 from aiogram import Router, F # роутер и "магический фильтр"
 from aiogram.filters import CommandStart, Command
 from aiogram.types import Message, CallbackQuery
-from keyboards.inline_kb import main_menu_kb, get_services_menu_kb, get_techsup_menu_kb, review_kb, privacy_menu_kb
+from keyboards.inline_kb import main_menu_kb, privacy_menu_kb, get_services_menu_kb, get_techsup_menu_kb, relocation_kb 
 start_router = Router()
 
 
@@ -31,14 +31,25 @@ async def techsup(callback:CallbackQuery):
     await callback.message.edit_text('<b>Пожалуйста, выберите категорию: </b>',
                                      reply_markup=get_techsup_menu_kb())
     
-# поблагодарить сотрудника
-@start_router.callback_query(F.data == 'thanks_to')
-async def thanks_to(callback:CallbackQuery):
-    await callback.message.edit_text('''<b>Мы рады, что смогли вам помочь!
+# переезд
+@start_router.callback_query(F.data == 'relocation')
+async def relocation(callback:CallbackQuery):
+    await callback.message.edit_text('''<b>Планируете переехать на новую квартиру? 🏠 
                                      
-Пожалуйста, поделитесь вашим мнением о специалисте — ваш отзыв вдохновляет нашу команду и помогает нам расти.</b>''',
-reply_markup=review_kb())
+Возьмите интернет и ТВ с собой ❗</b>
+                                     
+<b>Программа «Переезд»</b>
+Бесплатная программа, которая позволит сохранить тот же тариф на тех же условиях при смене адреса проживания.                                      
+Сохраните привычный объем опций и избавьтесь от путаницы: номер договора, баланс и бонусные баллы останутся прежними. Оборудование, взятое в аренду, остается за Вами.
+                                      
+<b>Приятный бонус при подключении программы – скидка 50% на 2 месяца 💰
+                                     
+Подать заявку на программу «Переезд» Вы можете в Личном кабинете или по номеру горячей линии</b>
 
+📞 8-800-1000-800
+ ''',
+                                     reply_markup=relocation_kb())
+    
 # вернуться к главному меню    
 @start_router.callback_query(F.data == 'back_to')
 async def back_to(callback:CallbackQuery):

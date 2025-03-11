@@ -1,24 +1,19 @@
 # импортируем необходимые модули и функции
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+# главное меню
 def main_menu_kb():
    inline_kb_list = [
         [InlineKeyboardButton(text='🚀 Подключить услуги', callback_data='connect_services')],
-        [InlineKeyboardButton(text='🛠️ Тех.поддержка', callback_data='techsup'), InlineKeyboardButton(text='😊 Оставить отзыв', callback_data='thanks_to')],
+        [InlineKeyboardButton(text='🛠️ Тех.поддержка', callback_data='techsup')],
         [InlineKeyboardButton(text='📦 Переезд', callback_data='relocation')]
     ]
    return InlineKeyboardMarkup(inline_keyboard=inline_kb_list)
 
+# политика конфиденциальности
 def privacy_menu_kb():
     inline_kb_list = [
         [InlineKeyboardButton(text='Открыть', url ='https://docs.google.com/document/d/1_qCH_1NHQs_erWQnoNKfVNZcPyf_uHPapsH49IMNWtY/edit?usp=sharing')]
-    ]
-    return InlineKeyboardMarkup(inline_keyboard=inline_kb_list)
-
-def review_kb():
-    inline_kb_list = [
-        [InlineKeyboardButton(text='Мы в 2ГИС', url='https://2gis.ru/tyumen/search/%D0%A0%D0%BE%D1%81%D1%82%D0%B5%D0%BB%D0%B5%D0%BA%D0%BE%D0%BC/firm/70000001019870299/tab/reviews?m=65.531745%2C57.154385%2F14.88')],
-        [InlineKeyboardButton(text='Назад', callback_data='back_to')]
     ]
     return InlineKeyboardMarkup(inline_keyboard=inline_kb_list)
 
@@ -89,11 +84,21 @@ def get_techsup_lk_kb():
     ]
     return InlineKeyboardMarkup(inline_keyboard=inline_kb_list)
 
+# клавиатура [Тех.поддержка - Соц.сети]
 def techsup_social_kb():
     inline_kb_list = [
         [InlineKeyboardButton(text='💬Написать нам ВКонтакте', url ='https://vk.com/im?entrypoint=community_page&media=&sel=-24720111')],
         [InlineKeyboardButton(text='✍️Написать нам в Одноклассниках ', url ='https://ok.ru/rostelecom.official')],
         [InlineKeyboardButton(text='Назад', callback_data='techsup_back')]
+    ]
+    return InlineKeyboardMarkup(inline_keyboard=inline_kb_list)
+
+def relocation_kb():
+    inline_kb_list = [
+        [InlineKeyboardButton(text='💻Личный кабинет Сайт', url ='https://b2c.passport.rt.ru/auth')],
+        [InlineKeyboardButton(text='🤖Личный кабинет Android', url ='https://play.google.com/store/apps/details?id=com.dartit.RTcabinet&hl=ru&pli=1')],
+        [InlineKeyboardButton(text='🍏Личный кабинет IOS', url ='https://apps.apple.com/ru/app/%D0%BC%D0%BE%D0%B9-%D1%80%D0%BE%D1%81%D1%82%D0%B5%D0%BB%D0%B5%D0%BA%D0%BE%D0%BC/id561082205')],
+        [InlineKeyboardButton(text='Назад', callback_data='back_to')]
     ]
     return InlineKeyboardMarkup(inline_keyboard=inline_kb_list)
 
