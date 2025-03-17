@@ -2,6 +2,7 @@
 from aiogram import Router, F # роутер и "магический фильтр"
 from aiogram.filters import CommandStart, Command
 from aiogram.types import Message, CallbackQuery
+from create_bot import bot, admins
 from keyboards.inline_kb import main_menu_kb, privacy_menu_kb, get_services_menu_kb, get_techsup_menu_kb, relocation_kb 
 start_router = Router()
 
@@ -9,7 +10,7 @@ start_router = Router()
 # главное меню на реплай клавиатуре
 @start_router.message(CommandStart())
 async def cmd_start(message: Message):
-    await message.answer(f'Здравствуйте, <b>{message.from_user.first_name}</b>!\n\n<b>Выберите интересующее Вас меню:</b>', 
+    await message.answer(f'Здравствуйте, <b>{message.from_user.first_name}</b>!\nВаш id: {message.from_user.id}\n\n<b>Выберите интересующее Вас меню:</b>', 
                          reply_markup=main_menu_kb())
     
 # Политика приватности
@@ -53,6 +54,24 @@ async def relocation(callback:CallbackQuery):
 # вернуться к главному меню    
 @start_router.callback_query(F.data == 'back_to')
 async def back_to(callback:CallbackQuery):
-    await callback.message.edit_text(f'Здравствуйте, <b>{callback.from_user.first_name}</b>!\n\n<b>Выберите интересующее Вас меню:</b>', 
+    await callback.message.edit_text(f'Здравствуйте, <b>{callback.from_user.first_name}</b>!\nВаш id: {callback.from_user.id}\n\n<b>Выберите интересующее Вас меню:</b>', 
                                     reply_markup=main_menu_kb())
-       
+
+# Реагирование на ключевые слова в сообщениях
+KEYWORDS = ['ростелеком', 'интернет', 'связь', 'приставка']
+
+@start_router.message(F.text)
+async def handle_keywords(message: Message):
+    # Проверяем, содержит ли текст сообщения ключевые слова
+    if any(keyword in message.text.lower() for keyword in KEYWORDS):
+        # Уведомляем пользователя
+        await message.answer("Мы заметили, что у вас возникла проблема. Обратитесь в техническую поддержку или ожидайте, пока с вами свяжется администратор.")
+
+        # Пересылаем сообщение админу
+        for admin_id in admins:
+            await bot.send_message(
+            admin_id,
+            f"⚠️ Пользователь @{message.from_user.username} (ID: {message.from_user.id}) написал сообщение с ключевым словом:\n\n"
+            f"<b>Текст сообщения:</b>\n{message.text}",
+            parse_mode="HTML"
+        )      
