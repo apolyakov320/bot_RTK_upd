@@ -10,12 +10,20 @@ start_router = Router()
 # главное меню на реплай клавиатуре
 @start_router.message(CommandStart())
 async def cmd_start(message: Message):
+     # Игнорируем команду в группах
+    if message.chat.type in ['group', 'supergroup']:
+        await message.answer('Для того, чтобы пользоваться командами, напишите мне в личные сообщения')
+        return
     await message.answer(f'Здравствуйте, <b>{message.from_user.first_name}</b>!\nВаш id: {message.from_user.id}\n\n<b>Выберите интересующее Вас меню:</b>', 
                          reply_markup=main_menu_kb())
     
 # Политика приватности
 @start_router.message(Command('privacy'))
 async def cmd_privacy(message: Message):
+    # Игнорируем команду в группах
+    if message.chat.type in ['group', 'supergroup']:
+        await message.answer('Для того, чтобы пользоваться командами, напишите мне в личные сообщения')
+        return
     await message.answer('<b>Политика конфиденциальности доступна по кнопке ниже:</b>', 
                          reply_markup=privacy_menu_kb())
     
