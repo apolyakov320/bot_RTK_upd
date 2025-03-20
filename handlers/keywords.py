@@ -5,10 +5,8 @@ from create_bot import bot, admins
 
 keywords_router = Router()
 # Хэндлер для обработки ключевых слов
-@keywords_router.message(F.text)
+@keywords_router.message(F.text.contains("ростелеком") | F.text.contains("интернет")| F.text.contains("связь")| F.text.contains("приставка"))
 async def handle_keywords(message: Message):
-    KEYWORDS = ['ростелеком', 'интернет', 'связь', 'приставка']
-    if any(keyword in message.text.lower() for keyword in KEYWORDS):
         await message.answer("Мы заметили, что у вас возникла проблема. Обратитесь в техническую поддержку или ожидайте, пока с вами свяжется администратор.")
         for admin_id in admins:
             await bot.send_message(
